@@ -1,0 +1,23 @@
+{
+  "name": "0x00-pl--avg-pack-to-ttf",
+  "version": "0.0.1",
+  "description": "svg pack to ttf",
+  "main": "index.js",
+  "scripts": {
+    "test": "python3 main.py"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/0x00-pl/svg2ttf.git"
+  },
+  "keywords": [
+    "svg",
+    "ttf"
+  ],
+  "author": "0x00-pl",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/0x00-pl/svg2ttf/issues"
+  },
+  "homepage": "https://github.com/0x00-pl/svg2ttf#readme"
+}
