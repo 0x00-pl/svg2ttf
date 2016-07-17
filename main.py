@@ -1,5 +1,6 @@
 import fontforge
 import json
+import sys
 import os
 
 class Ff:
@@ -44,13 +45,16 @@ class Ff:
         self.f.generate(file_name)
 
 
-    def create_files(self, ttf_path, json_path):
-        self.create_font_file(ttf_path)
-        json_obj = [
-            {"name":name, "code":self.f[name].unicode}
+    def create_files(self, ttf_path=None, json_path=None):
+        if ttf_path is not None:
+            self.create_font_file(ttf_path)
+
+        if json_path is not None:
+            json_obj = [
+                {"name":name, "code":self.f[name].unicode}
             for name in self.f
-        ]
-        json.dump(json_obj, open(json_path, 'w'))
+            ]
+            json.dump(json_obj, open(json_path, 'w'))
 
 
     def webkit_pathch(file_name):
@@ -68,4 +72,25 @@ def debug_run():
 
 
 if __name__=="__main__":
-    debug_run()
+    if len(sys.argv) < 4:
+        debug_run()
+    else:
+        svg_path = sys.argv[1]
+        ttf_file = sys.argv[2]
+        json_file = sys.argv[3]
+        export_list_file = None
+
+        if len(sys.argv) > 4:
+            export_list_file = sys.argv[4]
+
+        f = Ff()
+
+        if export_list_file is None:
+            f.add_svg_dir(svg_path)
+        else:
+            for line in open(export_list_file, 'r'):
+                f.add_char(line, svg_path)
+
+        f.create_files(ttf_file, json_file)
+        print("created file", ttf_file, json_file)
+
