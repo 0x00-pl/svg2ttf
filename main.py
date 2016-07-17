@@ -90,7 +90,8 @@ if __name__=="__main__":
             f.add_svg_dir(svg_path)
         else:
             for line in open(export_list_file, 'r'):
-                f.add_char(line, svg_path)
+                name = line.strip()
+                f.add_char(name, svg_path)
 
         f.create_files(ttf_file, json_file)
         print("created file:", ttf_file, json_file)

@@ -17,10 +17,14 @@ cli.main(function(args, options){
     options.ttf_file = args[1]
     options.json_file = args[2]
 
-    var cmd = "python3 main.py "+
-        options.svg_path+" "+
-        options.ttf_file+" "+
-        options.json_file
+    var cmd = "python3 main.py"+
+        " "+options.svg_path+
+        " "+options.ttf_file+
+        " "+options.json_file
+
+    if(options.name_list){
+        cmd = cmd + " "+options.name_list
+    }
 
     require('child_process')
         .exec(cmd, (error, stdout, stderr) => {
