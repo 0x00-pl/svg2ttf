@@ -1,10 +1,11 @@
 {
   "name": "0x00-pl--avg-pack-to-ttf",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "description": "svg pack to ttf",
   "main": "index.js",
   "scripts": {
-    "test": "python3 main.py"
+      "test": "python3 main.py",
+      "start": "node index.js node_modules/open-iconic/svg out/out.ttf out/out.json"
   },
   "repository": {
     "type": "git",
@@ -21,6 +22,7 @@
   },
   "homepage": "https://github.com/0x00-pl/svg2ttf#readme",
   "dependencies": {
-    "cli": "^0.11.2"
+    "cli": "^0.11.2",
+    "open-iconic": "^1.1.1"
   }
 }

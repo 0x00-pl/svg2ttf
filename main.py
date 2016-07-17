@@ -67,8 +67,9 @@ class Ff:
 
 def debug_run():
     f = Ff()
-    f.add_svg_dir("svg-src")
+    f.add_svg_dir("node_modules/open-iconic/svg")
     f.create_files("out/out.ttf", "out/out.json")
+    print("created file: out/out.ttf out/out.json")
 
 
 if __name__=="__main__":
@@ -92,5 +93,5 @@ if __name__=="__main__":
                 f.add_char(line, svg_path)
 
         f.create_files(ttf_file, json_file)
-        print("created file", ttf_file, json_file)
+        print("created file:", ttf_file, json_file)
 
