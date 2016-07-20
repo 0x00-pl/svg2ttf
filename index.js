@@ -1,4 +1,4 @@
-var cli = require("cli").enable("status")
+var cli = require("cli")
 
 
 cli.parse({
@@ -17,15 +17,19 @@ cli.main(function(args, options){
     options.ttf_file = args[1]
     options.json_file = args[2]
 
+    call_cmd(options.svg_path, options.ttf_file, options.json_file, options.name_list)
+})
+
+
+export default function call_cmd(svg_path, ttf_file, json_file, name_list){
     var cmd = "python3 main.py"+
-        " "+options.svg_path+
-        " "+options.ttf_file+
-        " "+options.json_file
+        " "+svg_path+
+        " "+ttf_file+
+        " "+json_file
 
-    if(options.name_list){
-        cmd = cmd + " "+options.name_list
+    if(name_list){
+        cmd = cmd + " "+name_list
     }
-
     require('child_process')
         .exec(cmd, (error, stdout, stderr) => {
             if (error) {
@@ -37,4 +41,4 @@ cli.main(function(args, options){
                 console.log(`stderr: ${stderr}`);
             }
         })
-})
+}
