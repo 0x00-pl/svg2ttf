@@ -92,7 +92,7 @@ def read_config_form_stdin():
             name = svg_conf.get('name', '')
             char_code = svg_conf.get('code', None)
             if char_code is not None:
-                char_code = int(char_code[2:], 16)
+                char_code = int(char_code, 16)
             ff.add_char(name, svg_path)
 
     ff.create_files(outttf, outjson)
