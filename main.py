@@ -71,10 +71,34 @@ def debug_run():
     f.create_files("out/out.ttf", "out/out.json")
     print("created file: out/out.ttf out/out.json")
 
+def read_config_form_stdin():
+    try:
+        config = json.loads(sys.stdin.read())
+    except ValueError:
+        config = {}
+
+    outttf = config.get('out_ttf', 'out/out.ttf')
+    outjson = config.get('out_json', 'out/out.json')
+
+    svg_path = config.get('svg_path', 'node_modules/open-iconic/svg')
+    name_list = config.get('name_list', None)
+
+    ff = Ff()
+    if name_list is None:
+        ff.add_svg_dir(svg_path)
+    else:
+        for svg_conf in name_list:
+            name = svg_conf.get('name', '')
+            ff.add_char(name, svg_path)
+
+    ff.create_files(outttf, outjson)
+    print("created file:", outttf, outjson)
+
 
 if __name__=="__main__":
     if len(sys.argv) < 4:
-        debug_run()
+        #debug_run()
+        read_config_form_stdin()
     else:
         svg_path = sys.argv[1]
         ttf_file = sys.argv[2]
