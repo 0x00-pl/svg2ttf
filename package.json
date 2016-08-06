@@ -1,11 +1,11 @@
 {
-  "name": "0x00-pl--avg-pack-to-ttf",
-  "version": "0.0.6",
+  "name": "0x00-pl--svg-pack-to-ttf",
+  "version": "0.0.7",
   "description": "svg pack to ttf",
   "main": "index.js",
   "scripts": {
       "test": "python3 main.py",
-      "start": "node index.js node_modules/open-iconic/svg out/out.ttf out/out.json"
+      "start": "node index.js"
   },
   "repository": {
     "type": "git",

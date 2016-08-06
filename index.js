@@ -2,22 +2,22 @@ var cli = require("cli")
 var child_process = require("child_process")
 
 cli.parse({
-    name_list: ["l", "only export name in list", "file"],
     svg_path: ["arg0", "svg path", "path"],
-    ttf_file: ["arg1", "output ttf file", "path"],
-    json_file: ["arg2", "output json file", "path"],
+    out_ttf: ["arg1", "output ttf file", "path"],
+    out_json: ["arg2", "output json file", "path"],
+    name_list: ["l", "only export name in list", "file"],
 })
 
 cli.main(function(args, options){
     if(args.length < 3){
         cli.getUsage(-1)
     }
-
+    // set untaged argds to options
     options.svg_path = args[0]
-    options.ttf_file = args[1]
-    options.json_file = args[2]
-
-    call_cmd(options.svg_path, options.ttf_file, options.json_file, options.name_list)
+    options.out_ttf = args[1]
+    options.out_json = args[2]
+    // call_cmd(options.svg_path, options.ttf_file, options.json_file, options.name_list)
+    call_pipe(options)
 })
 
 function call_cmd(svg_path, ttf_file, json_file, name_list){
@@ -36,24 +36,28 @@ function call_cmd(svg_path, ttf_file, json_file, name_list){
         }
         console.log(stdout);
         if(stderr){
-            console.log(`stderr: ${stderr}`);
+           console.log(`stderr: ${stderr}`);
         }
     })
 }
 
 function call_pipe(config, cb){
     var conf = Object.assign({
+        svg_path: 'node_modules/open-iconic/svg',
         out_ttf: 'out/out.ttf',
         out_json: 'out/out.json',
-        svg_path: 'node_modules/open-iconic/svg'
-    }, config)
+        name_list: undefined,
+    }, config||{})
     var conf_json = JSON.stringify(conf)
-    var proc = child_process.spwan("python3 main.py")
-    proc.stdin.write(conf_json)
+    var proc = child_process.spawn("python3", ["main.py"])
+    console.log('======')
+    proc.stdin.end(conf_json)
+    proc.stdout.pipe(process.stdout)
     proc.on('close', code=>{
+        console.log('======')
         console.log('proc exit code:', code)
-        cb()
+        cb&&cb()
     })
 }
 
-export.default = call_pipe
+exports.default = call_pipe
