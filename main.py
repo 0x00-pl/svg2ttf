@@ -25,13 +25,14 @@ class Ff:
         glyph.importOutlines(file_path)
 
 
-    def add_char(self, name, svg_path="."):
+    def add_char(self, name, svg_path=".", char_code=None):
         #  find a place
-        while self.char_code in self.f:
+        while char_code is None or char_code in self.f:
+            char_code = self.char_code
             self.char_code += 1
 
         file_path = os.path.join(svg_path, name+".svg")
-        self.create_char_from_file(self.char_code, file_path, name)
+        self.create_char_from_file(char_code, file_path, name)
 
 
     def add_svg_dir(self, svg_path):
@@ -89,6 +90,9 @@ def read_config_form_stdin():
     else:
         for svg_conf in name_list:
             name = svg_conf.get('name', '')
+            char_code = svg_conf.get('code', None)
+            if char_code is not None:
+                char_code = int(char_code[2:], 16)
             ff.add_char(name, svg_path)
 
     ff.create_files(outttf, outjson)
